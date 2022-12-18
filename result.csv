@@ -1,0 +1,5 @@
+key	aaa	bbb
+aaa	hogefuga=bbb	hogefuga=bbb
+ccc		ccccc
+ddd	['aaa', 'bbb']	bbb
+eee		eeee

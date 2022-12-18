@@ -50,10 +50,10 @@ def parse_line(line: str):
     key, val = line.split('=', maxsplit=1)
     return (key, val)
 
-def print_csv():
+def print_csv(outputfile: str):
     all_keys = sorted(list({key for dic in dir_parse.values() for key in dic.keys()}))
     colums = sorted(dir_parse.keys())
-    with open('./result.csv', 'w') as f:
+    with open(outputfile, 'w') as f:
         w = csv.writer(f, delimiter='\t')
         w.writerow(['key'] + colums)
         for key in all_keys:
@@ -69,7 +69,7 @@ def print_csv():
                     row.append(val[0])
             w.writerow(row)
 
-def print_excel():
+def print_excel(outputfile: str):
     all_keys = sorted(list({key for dic in dir_parse.values() for key in dic.keys()}))
     colums = sorted(dir_parse.keys())
     wb = Workbook()
@@ -89,7 +89,7 @@ def print_excel():
             else:
                 row.append(val[0])
         print_worksheet_row(ws, rownum, row)
-    wb.save('./result.xlsx')
+    wb.save(outputfile)
 
 def print_worksheet_row(ws, rownum: int, vals: list):
     color_dic = defaultdict(str)
@@ -104,10 +104,12 @@ def print_worksheet_row(ws, rownum: int, vals: list):
 
 if __name__ == '__main__':
     arg = sys.argv[1:]
-    if (len(arg) != 2):
+    if (len(arg) != 3):
         print('引数の数が不正です')
+        sys.exit()
     target_dir = arg[0]
     target_file = arg[1]
+    output_file = arg[2]
     parse_dirs(target_dir, target_file)
-    # print_csv()
-    print_excel()
+    # print_csv(output_file)
+    print_excel(output_file)
